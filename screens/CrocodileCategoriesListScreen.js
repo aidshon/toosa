@@ -1,10 +1,11 @@
 import React from "react";
-import { ImageBackground, ScrollView, StatusBar } from "react-native";
+import { ImageBackground, LayoutAnimation, ScrollView, StatusBar } from "react-native";
 import { CrocodileCategoryCard, Header } from "../components";
 import { categories } from "../data/data";
 
 class CrocodileCategoriesListScreen extends React.Component {
   componentWillMount() {
+    LayoutAnimation.spring();
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
   }
 

@@ -67,54 +67,52 @@ class ModalView extends React.Component {
         backdropTransitionOutTiming={500}
         style={modalStyle}
       >
-        <View style={{ height: MODAL_HEIGHT }}>
-          <ImageBackground
-            source={require("../static/images/modalBackground.png")}
-            style={backgroundImageStyle}
-            borderRadius={10}
-          >
-            <View style={gameInfoContainerStyle}>
-              <Image source={itemToShow.icon} style={iconStyle} />
-              {this.state.fontLoaded && (
+        {this.state.fontLoaded && (
+          <View style={{ height: MODAL_HEIGHT }}>
+            <ImageBackground
+              source={require("../static/images/modalBackground.png")}
+              style={backgroundImageStyle}
+              borderRadius={10}
+            >
+              <View style={gameInfoContainerStyle}>
+                <Image source={itemToShow.icon} style={iconStyle} />
                 <Text style={[gameNameLabelStyle, { fontFamily: "arimo" }]}>
                   {itemToShow.name}
                 </Text>
-              )}
-              <Text style={lineStyle}>
-                ____________________________________________
-              </Text>
-              {this.state.fontLoaded && (
+                <Text style={lineStyle}>
+                  ____________________________________________
+                </Text>
                 <Text style={[gameDescriptionStyle, { fontFamily: "arimo" }]}>
                   {itemToShow.description}
                 </Text>
-              )}
-            </View>
-            <View style={buttonsContainerStyle}>
-              {itemToShow.screenName && (
-                <TouchableOpacity
-                  onPress={() => this.handleShare(itemToShow.name)}
-                  style={buttonsStyle}
-                >
-                  <Text style={buttonsTextStyle}>Поделиться</Text>
+              </View>
+              <View style={buttonsContainerStyle}>
+                {itemToShow.screenName && (
+                  <TouchableOpacity
+                    onPress={() => this.handleShare(itemToShow.name)}
+                    style={buttonsStyle}
+                  >
+                    <Text style={buttonsTextStyle}>Поделиться</Text>
+                  </TouchableOpacity>
+                )}
+                {itemToShow.screenName && (
+                  <TouchableOpacity
+                    onPress={handleShowGameOptions}
+                    style={playButtonStyle}
+                  >
+                    <Image
+                      style={playButtonIconStyle}
+                      source={require("../static/images/icons/play_button.png")}
+                    />
+                  </TouchableOpacity>
+                )}
+                <TouchableOpacity onPress={onCloseModal} style={buttonsStyle}>
+                  <Text style={buttonsTextStyle}>Закрыть</Text>
                 </TouchableOpacity>
-              )}
-              {itemToShow.screenName && (
-                <TouchableOpacity
-                  onPress={handleShowGameOptions}
-                  style={playButtonStyle}
-                >
-                  <Image
-                    style={playButtonIconStyle}
-                    source={require("../static/images/icons/play_button.png")}
-                  />
-                </TouchableOpacity>
-              )}
-              <TouchableOpacity onPress={onCloseModal} style={buttonsStyle}>
-                <Text style={buttonsTextStyle}>Закрыть</Text>
-              </TouchableOpacity>
-            </View>
-          </ImageBackground>
-        </View>
+              </View>
+            </ImageBackground>
+          </View>
+        )}
       </Modal>
     );
   }

@@ -6,6 +6,8 @@ import Header from "./Header";
 import HomeButton from "./HomeButton";
 import ModalView from "./ModalView";
 import NextButton from "./NextButton";
+import ShowFriendsList from "./ShowFriendsList";
+import ShowGroupsList from "./ShowGroupsList";
 
 export {
   BackgroundGameCard,
@@ -15,5 +17,7 @@ export {
   Header,
   HomeButton,
   ModalView,
-  NextButton
+  NextButton,
+  ShowFriendsList,
+  ShowGroupsList
 };

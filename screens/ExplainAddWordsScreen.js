@@ -1,12 +1,15 @@
 import React from "react";
 import {
   Dimensions,
+  Keyboard,
   KeyboardAvoidingView,
   ImageBackground,
+  LayoutAnimation,
   StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View
 } from "react-native";
 import { Icon } from "react-native-elements";
@@ -26,22 +29,31 @@ class ExplainAddWordsScreen extends React.Component {
   }
 
   componentWillMount() {
+    LayoutAnimation.spring();
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
   }
 
   state = {
     wordsList: [],
     word: "",
-    fontLoaded: false
+    fontLoaded: false,
+    isDisabled: true
   };
 
   groupsList = this.props.navigation.getParam("groupsList");
 
   handleAddWords = () => {
-    if (this.state.word) {
+    if (this.state.wordsList.length !== this.groupsList.length * 8) {
+      if (this.state.word) {
+        this.setState({
+          wordsList: [...this.state.wordsList, this.state.word.toUpperCase()],
+          word: ""
+        });
+      }
+    }
+    if (this.state.wordsList.length === this.groupsList.length * 8 - 1) {
       this.setState({
-        wordsList: [...this.state.wordsList, this.state.word.toUpperCase()],
-        word: ""
+        isDisabled: false
       });
     }
   };
@@ -71,63 +83,63 @@ class ExplainAddWordsScreen extends React.Component {
     } = styles;
 
     return (
-      <ImageBackground
-        source={require("../static/images/background.png")}
-        style={backgroundImageStyle}
-      >
-        <StatusBar barStyle="light-content" hidden={false} />
-        <Header
-          headerText={"Настройки игры"}
-          handleGoHome={this.handleGoHome}
-        />
-        {this.state.fontLoaded && (
-          <Text style={[optionsStyle, { fontFamily: "arimo" }]}>
-            Каждый игрок команды вводит по 4 слова. Как только наберется
-            необходимое количество слов можно начинать играть. Передавайте
-            телефон по порядку каждому игроку.
-          </Text>
-        )}
-        <KeyboardAvoidingView
-          behavior="padding"
-          enabled
-          style={mainContainerStyle}
-        >
-          <View style={containerStyle}>
-            <Text style={labelStyle}>
-              Количество слов: {this.state.wordsList.length}
+      this.state.fontLoaded && (
+          <ImageBackground
+            source={require("../static/images/background.png")}
+            style={backgroundImageStyle}
+          >
+            <StatusBar barStyle="light-content" hidden={false} />
+            <Header
+              headerText={"Настройки игры"}
+              handleGoHome={this.handleGoHome}
+            />
+            <Text style={[optionsStyle, { fontFamily: "arimo" }]}>
+              Каждый игрок команды вводит по 4 слова. Как только наберется
+              необходимое количество слов можно начинать играть. Передавайте
+              телефон по порядку каждому игроку.
             </Text>
-            <Text style={labelStyle}>
-              Осталось:{" "}
-              {this.groupsList.length * 8 - this.state.wordsList.length}
-            </Text>
-            <Text style={labelStyle}>Введите слово:</Text>
-            <View style={wrapperStyle}>
-              <TextInput
-                style={inputStyle}
-                value={this.state.word}
-                onChangeText={word => this.setState({ word })}
-              />
-              {this.state.word &&
-                this.state.wordsList.length !== this.groupsList.length * 8 && (
+            <KeyboardAvoidingView
+              behavior="padding"
+              enabled
+              style={mainContainerStyle}
+            >
+              <View style={containerStyle}>
+                <Text style={[labelStyle, { fontFamily: "arimo" }]}>
+                  Количество слов: {this.state.wordsList.length}
+                </Text>
+                <Text style={[labelStyle, { fontFamily: "arimo" }]}>
+                  Осталось:{" "}
+                  {this.groupsList.length * 8 - this.state.wordsList.length}
+                </Text>
+                <Text style={[labelStyle, { fontFamily: "arimo" }]}>
+                  Введите слово:
+                </Text>
+                <View style={wrapperStyle}>
+                  <TextInput
+                    style={[inputStyle, { fontFamily: "arimo" }]}
+                    value={this.state.word}
+                    onChangeText={word => this.setState({ word })}
+                  />
                   <Animatable.View animation="fadeInRight">
                     <TouchableOpacity onPress={this.handleAddWords}>
                       <Icon name="add" size={40} color="#FFFFFF" />
                     </TouchableOpacity>
                   </Animatable.View>
-                )}
-            </View>
-          </View>
-        </KeyboardAvoidingView>
-        {this.state.wordsList.length === this.groupsList.length * 8 && (
-          <Animatable.View
-            animation="pulse"
-            easing="ease-out"
-            iterationCount="infinite"
-          >
-            <NextButton onShowScreen={this.handleShowExplainGameScreen} />
-          </Animatable.View>
-        )}
-      </ImageBackground>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+            <Animatable.View
+              animation="pulse"
+              easing="ease-out"
+              iterationCount="infinite"
+            >
+              <NextButton
+                onShowScreen={this.handleShowExplainGameScreen}
+                isDisabled={this.state.isDisabled}
+              />
+            </Animatable.View>
+          </ImageBackground>
+      )
     );
   }
 }

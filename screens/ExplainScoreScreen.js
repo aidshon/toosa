@@ -3,6 +3,7 @@ import {
   Dimensions,
   FlatList,
   ImageBackground,
+  LayoutAnimation,
   StatusBar,
   Text,
   TouchableOpacity,
@@ -17,6 +18,7 @@ const CARD_HEIGHT = height - 200;
 
 class ExplainScoreScreen extends React.Component {
   componentWillMount() {
+    LayoutAnimation.spring();
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
   }
 
@@ -63,6 +65,8 @@ class ExplainScoreScreen extends React.Component {
   };
 
   render() {
+    console.disableYellowBox = true;
+
     const {
       backgroundImageStyle,
       buttonStyle,

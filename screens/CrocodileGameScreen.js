@@ -2,6 +2,7 @@ import React from "react";
 import {
   Dimensions,
   ImageBackground,
+  LayoutAnimation,
   StatusBar,
   Text,
   View
@@ -14,6 +15,7 @@ const CARD_WIDTH = width - 100;
 
 class CrocodileGameScreen extends React.Component {
   componentWillMount() {
+    LayoutAnimation.spring();
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
   }
 

@@ -27,28 +27,41 @@ class ExplainGameScreenBody extends React.Component {
   };
 
   handleSwipe = () => {
-    if (this.state.wordsList !== 0) {
-      length = this.state.wordsList.length;
-      randomItemIndex = Math.floor(Math.random() * length);
-      this.setState({
-        wordsList: this.state.wordsList.filter(
-          item => item !== this.state.wordToShow
-        )
-      });
+    if (this.state.wordsList.length !== 0) {
+      this.setState(
+        {
+          wordsList: this.state.wordsList.filter(
+            item => item !== this.state.wordToShow
+          )
+        },
+        () => {
+          this.state.wordsList;
+          length = this.state.wordsList.length;
+          randomItemIndex = Math.floor(Math.random() * length);
+          this.props.groupsList.map(item => {
+            if (
+              item.name ===
+              this.props.groupsList[this.state.currentGroupIndex].name
+            ) {
+              this.props.handleUpdateData(item.name, this.state.wordsList);
+            }
+          });
 
-      this.props.groupsList.map(item => {
-        if (
-          item.name === this.props.groupsList[this.state.currentGroupIndex].name
-        ) {
-          this.props.handleUpdateData(item.name, this.state.wordsList);
+          if (randomItemIndex === 0 && !this.state.wordsList[randomItemIndex]) {
+            this.setState({
+              wordToShow: "Слова закончились. Дождитесь окончания времени."
+            });
+          } else {
+            this.setState({
+              wordToShow: this.state.wordsList[randomItemIndex]
+            });
+          }
         }
-      });
-
-      this.setState({
-        wordToShow: this.state.wordsList[randomItemIndex]
-      });
+      );
     } else {
-      this.props.handleWordsOver;
+      this.setState({
+        wordToShow: "Слова закончились. Дождитесь окончания времени."
+      });
     }
   };
 
@@ -82,7 +95,8 @@ const styles = {
   wordStyle: {
     fontSize: 22,
     color: "#36254B",
-    alignSelf: "center"
+    alignSelf: "center",
+    textAlign: "center"
   }
 };
 

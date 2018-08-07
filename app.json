@@ -1,5 +1,24 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "version": "1.0.0",
+    "name": "Toosa",
+    "slug": "toosa",
+    "icon": "./assets/appImages/toosa.png",
+    "orientation": "portrait",
+    "splash": {
+      "image": "./assets/appImages/splash.png",
+      "resizeMode": "cover"
+    },
+    "android": {
+      "package": "com.toosa.toosa",
+      "permissions": []
+    },
+    "ios": {
+      "bundleIdentifier": "com.toosa2.toosa2"
+    },
+    "packagerOpts": {
+      "nonPersistent": "--nonPersistent"
+    }
   }
 }

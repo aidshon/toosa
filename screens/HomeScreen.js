@@ -1,11 +1,12 @@
 import React from "react";
-import { FlatList, ImageBackground, StatusBar, Text, View } from "react-native";
+import { FlatList, ImageBackground, LayoutAnimation, StatusBar, Text, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { BackgroundGameCard, GameCard, ModalView } from "../components";
 import { games } from "../data/data";
 
 class HomeScreen extends React.Component {
   componentWillMount() {
+    LayoutAnimation.spring();
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
   }
 

@@ -4,12 +4,13 @@ import { Icon } from "react-native-elements";
 
 class NextButton extends React.Component {
   render() {
-    const { onShowScreen } = this.props;
+    const { onShowScreen, isDisabled } = this.props;
 
     return (
       <TouchableOpacity
         onPress={onShowScreen}
         style={styles.nextButtonWrapperStyle}
+        disabled={isDisabled}
       >
         <Icon name="skip-next" size={50} color="#FFFFFF" />
       </TouchableOpacity>

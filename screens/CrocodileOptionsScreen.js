@@ -2,16 +2,19 @@ import React from "react";
 import {
   Dimensions,
   ImageBackground,
+  Keyboard,
   KeyboardAvoidingView,
+  LayoutAnimation,
   StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { Font } from "expo";
-import { Header, NextButton } from "../components";
+import { Header, NextButton, ShowFriendsList } from "../components";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width - 134;
@@ -25,6 +28,7 @@ class CrocodileOptionsScreen extends React.Component {
   }
 
   componentWillMount() {
+    LayoutAnimation.spring();
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
   }
 
@@ -32,8 +36,13 @@ class CrocodileOptionsScreen extends React.Component {
     time: 1,
     friendName: "",
     friendsNameList: [],
-    fontLoaded: false
+    fontLoaded: false,
+    modalVisible: false
   };
+
+  setModalUnVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
 
   handleAddFriends = () => {
     if (this.state.friendName) {
@@ -69,79 +78,97 @@ class CrocodileOptionsScreen extends React.Component {
     } = styles;
 
     return (
-      <ImageBackground
-        source={require("../static/images/background.png")}
-        style={backgroundImageStyle}
-      >
-        <StatusBar barStyle="light-content" hidden={false} />
-        <View style={mainWrapperStyle}>
-          <Header
-            headerText={"Настройки игры"}
-            handleGoHome={this.handleGoHome}
-          />
-          {this.state.fontLoaded && (
-            <Text style={[optionsStyle, { fontFamily: "arimo" }]}>
-              По желанию можно ввести имена участников для рандомного выбора
-              жертвы и указать ограничение по времени. По умолчанию дается 1
-              минута на объяснение.
-            </Text>
-          )}
-          <KeyboardAvoidingView
-            behavior="padding"
-            enabled
-            style={mainContainerStyle}
+      this.state.fontLoaded && (
+          <ImageBackground
+            source={require("../static/images/background.png")}
+            style={backgroundImageStyle}
           >
-            <View style={containerStyle}>
-              {this.state.fontLoaded && (
-                <Text style={[labelStyle, { fontFamily: "arimo" }]}>
-                  Введите имена участников:
-                </Text>
-              )}
-              <View style={wrapperStyle}>
-                <TextInput
-                  style={inputStyle}
-                  value={this.state.friendName}
-                  onChangeText={friendName => this.setState({ friendName })}
-                />
-                <TouchableOpacity onPress={this.handleAddFriends}>
-                  <Icon
-                    name="add"
-                    size={40}
-                    color="#FFFFFF"
-                    style={addButtonStyle}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={containerStyle}>
-              {this.state.fontLoaded && (
-                <Text style={[labelStyle, { fontFamily: "arimo" }]}>
-                  Введите время:
-                </Text>
-              )}
-              <View style={wrapperStyle}>
-                <TextInput
-                  keyboardType="numeric"
-                  style={[
-                    inputStyle,
-                    { marginRight: 10, width: 49, textAlign: "center" }
-                  ]}
-                  onChangeText={time => this.setState({ time })}
-                  maxLength={1}
-                />
-                {this.state.fontLoaded && (
-                  <Text
-                    style={[labelStyle, { fontSize: 20, fontFamily: "arimo" }]}
-                  >
-                    минут(-ы)
+            <StatusBar barStyle="light-content" hidden={false} />
+            <View style={mainWrapperStyle}>
+              <Header
+                headerText={"Настройки игры"}
+                handleGoHome={this.handleGoHome}
+              />
+              <Text style={[optionsStyle, { fontFamily: "arimo" }]}>
+                По желанию можно ввести имена участников для рандомного выбора
+                жертвы и указать ограничение по времени. По умолчанию дается 1
+                минута на объяснение.
+              </Text>
+              <KeyboardAvoidingView
+                behavior="padding"
+                enabled
+                style={mainContainerStyle}
+              >
+                <View style={containerStyle}>
+                  {this.state.fontLoaded && (
+                    <Text style={[labelStyle, { fontFamily: "arimo" }]}>
+                      Введите имена участников:
+                    </Text>
+                  )}
+                  <View style={wrapperStyle}>
+                    <TextInput
+                      style={inputStyle}
+                      value={this.state.friendName}
+                      onChangeText={friendName => this.setState({ friendName })}
+                    />
+                    <TouchableOpacity onPress={this.handleAddFriends}>
+                      <Icon
+                        name="add"
+                        size={40}
+                        color="#FFFFFF"
+                        style={addButtonStyle}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={containerStyle}>
+                  <Text style={[labelStyle, { fontFamily: "arimo" }]}>
+                    Введите время:
                   </Text>
-                )}
-              </View>
+                  <View style={wrapperStyle}>
+                    <TextInput
+                      keyboardType="numeric"
+                      style={[
+                        inputStyle,
+                        { marginRight: 10, width: 49, textAlign: "center" }
+                      ]}
+                      onChangeText={time => this.setState({ time })}
+                      maxLength={1}
+                    />
+                    <Text
+                      style={[
+                        labelStyle,
+                        { fontSize: 20, fontFamily: "arimo" }
+                      ]}
+                    >
+                      минут(-ы)
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.setState({
+                        modalVisible: true
+                      })
+                    }
+                  >
+                    <Text style={[labelStyle, { fontFamily: "arimo" }]}>
+                      Показать список
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </KeyboardAvoidingView>
             </View>
-          </KeyboardAvoidingView>
-        </View>
-        <NextButton onShowScreen={this.handleShowCategoriesListScreen} />
-      </ImageBackground>
+            <ShowFriendsList
+              modalVisible={this.state.modalVisible}
+              data={this.state.friendsNameList}
+              onCloseModal={() =>
+                this.setModalUnVisible(!this.state.modalVisible)
+              }
+              handleGoNext={() => this.handleShowCategoriesListScreen}
+            />
+            <NextButton onShowScreen={this.handleShowCategoriesListScreen} />
+          </ImageBackground>
+      )
     );
   }
 }

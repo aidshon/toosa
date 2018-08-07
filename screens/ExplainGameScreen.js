@@ -1,5 +1,11 @@
 import React from "react";
-import { Dimensions, ImageBackground, StatusBar, Text } from "react-native";
+import {
+  Dimensions,
+  ImageBackground,
+  LayoutAnimation,
+  StatusBar,
+  Text
+} from "react-native";
 import CountDown from "react-native-countdown-component";
 import { ExplainGameScreenBody, Header } from "../components";
 
@@ -8,6 +14,7 @@ const CARD_WIDTH = width / 2 - 30;
 
 class ExplainGameScreen extends React.Component {
   componentWillMount() {
+    LayoutAnimation.spring();
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
   }
 
@@ -47,7 +54,7 @@ class ExplainGameScreen extends React.Component {
     this.wordsList = wordsList;
 
     this.groupsList.map(item => {
-      if (item.name === groupName) {
+      if (item.name === groupName.toUpperCase()) {
         item.points += 1;
       }
     });
@@ -78,7 +85,7 @@ class ExplainGameScreen extends React.Component {
           Играет команда: {this.groupsList[this.currentGroupIndex].name}
         </Text>
         <CountDown
-          until={20}
+          until={60}
           timeToShow={["M", "S"]}
           size={30}
           timeTxtColor={"transparent"}
