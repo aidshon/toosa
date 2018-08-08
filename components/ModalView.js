@@ -30,9 +30,9 @@ class ModalView extends React.Component {
   handleShare = gameName => {
     Share.share({
       message:
-        "Давай сыгрем в игру " +
+        "Давай сыграем в игру '" +
         gameName +
-        '. Приложение "Toosa" доступно в AppStore.'
+        ". Приложение 'Toosa' доступно в AppStore."
     });
   };
 
