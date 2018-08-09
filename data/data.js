@@ -14,30 +14,6 @@ const games = [
     screenName: "ExplainOptionsScreen",
     description:
       "Играют четное количество человек, в каждой команде по 2 игрока. Каждый игрок вписывает слово, которое хочет загадать. Дается минута на объяснение загаданного слова напарнику, не используя однокоренные слова. В конце игры считываются очки по количеству отгаданных слов."
-  },
-  {
-    id: 2,
-    name: "В процессе",
-    icon: require("../static/images/icons/games/innovation.png"),
-    description: ""
-  },
-  {
-    id: 3,
-    name: "В процессе",
-    icon: require("../static/images/icons/games/innovation.png"),
-    description: ""
-  },
-  {
-    id: 4,
-    name: "В процессе",
-    icon: require("../static/images/icons/games/innovation.png"),
-    description: ""
-  },
-  {
-    id: 5,
-    name: "В процессе",
-    icon: require("../static/images/icons/games/innovation.png"),
-    description: ""
   }
 ];
 
