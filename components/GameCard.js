@@ -20,12 +20,13 @@ class GameCard extends React.Component {
 
   render() {
     const { gameCardStyle, gameIconStyle, gameNameStyle } = styles;
-    const { game, onShowGameDescription } = this.props;
+    const { game, onShowGameDescription, isDisabled } = this.props;
 
     return (
       <TouchableOpacity
         onPress={() => onShowGameDescription(true, game)}
         style={gameCardStyle}
+        disabled={isDisabled}
       >
         <Image source={game.icon} style={gameIconStyle} />
         {this.state.fontLoaded && (

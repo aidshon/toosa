@@ -15,7 +15,8 @@
       "permissions": []
     },
     "ios": {
-      "bundleIdentifier": "com.toosa2.toosa2"
+      "bundleIdentifier": "com.toosa2.toosa2",
+      "supportsTablet": true
     },
     "packagerOpts": {
       "nonPersistent": "--nonPersistent"

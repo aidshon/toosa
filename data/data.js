@@ -19,25 +19,25 @@ const games = [
     id: 2,
     name: "В процессе",
     icon: require("../static/images/icons/games/innovation.png"),
-    description: "Скоро!"
+    description: ""
   },
   {
     id: 3,
     name: "В процессе",
     icon: require("../static/images/icons/games/innovation.png"),
-    description: "Скоро!"
+    description: ""
   },
   {
     id: 4,
     name: "В процессе",
     icon: require("../static/images/icons/games/innovation.png"),
-    description: "Скоро!"
+    description: ""
   },
   {
     id: 5,
     name: "В процессе",
     icon: require("../static/images/icons/games/innovation.png"),
-    description: "Скоро!"
+    description: ""
   }
 ];
 

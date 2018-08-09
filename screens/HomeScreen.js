@@ -1,5 +1,12 @@
 import React from "react";
-import { FlatList, ImageBackground, LayoutAnimation, StatusBar, Text, View } from "react-native";
+import {
+  FlatList,
+  ImageBackground,
+  LayoutAnimation,
+  StatusBar,
+  Text,
+  View
+} from "react-native";
 import * as Animatable from "react-native-animatable";
 import { BackgroundGameCard, GameCard, ModalView } from "../components";
 import { games } from "../data/data";
@@ -30,6 +37,10 @@ class HomeScreen extends React.Component {
 
   handleShowItem = ({ item }) => {
     const { cardWrapperStyle } = styles;
+    isDisabled = false;
+    if (!item.description) {
+      isDisabled = true;
+    }
 
     return (
       <Animatable.View animation="bounceIn" style={cardWrapperStyle}>
@@ -38,19 +49,25 @@ class HomeScreen extends React.Component {
           onShowGameDescription={(visible, game) =>
             this.handleShowGameDescription(visible, game)
           }
+          isDisabled={isDisabled}
         />
       </Animatable.View>
     );
   };
 
-  handleShowItemBackground = () => {
+  handleShowItemBackground = ({ item }) => {
+    isDisabled = false;
+    if (!item.description) {
+      isDisabled = true;
+    }
+
     return (
       <Animatable.View
         animation="bounceIn"
         easing="ease-out"
         style={styles.cardWrapperStyle}
       >
-        <BackgroundGameCard />
+        <BackgroundGameCard isDisabled={isDisabled} />
       </Animatable.View>
     );
   };

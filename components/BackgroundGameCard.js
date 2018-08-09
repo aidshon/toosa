@@ -7,13 +7,19 @@ const CARD_HEIGHT = CARD_WIDTH - 10;
 
 class BackgroundGameCard extends React.Component {
   render() {
-    return <View style={styles.gameCardStyle} />;
+    return (
+      <View
+        style={[
+          styles.gameCardStyle,
+          { backgroundColor: this.props.isDisabled ? "lightgray" : "#FFFFFF" }
+        ]}
+      />
+    );
   }
 }
 
 const styles = {
   gameCardStyle: {
-    backgroundColor: "#FFFFFF",
     borderRadius: 10,
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
